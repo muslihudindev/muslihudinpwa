@@ -1,0 +1,33 @@
+{
+    "background_color": "#d2f5e3",
+    "theme_color": "#94b4a4",
+    "display": "standalone",
+    "description": "Aplikasi PWA English Premier League Arena",
+    "start_url": "/index.html",
+    "app_name": "English Premier League Arena",
+    "name": "English Premier League Arena",
+    "short_name": "EPL Arena",
+    "icons": [
+        {
+            "src": "/img/icon-192x192.png",
+            "sizes": "192x192",
+            "type": "image/png"
+        },
+        {
+            "src": "/img/icon-256x256.png",
+            "sizes": "256x256",
+            "type": "image/png"
+        },
+        {
+            "src": "/img/icon-384x384.png",
+            "sizes": "384x384",
+            "type": "image/png"
+        },
+        {
+            "src": "/img/icon-512x512.png",
+            "sizes": "512x512",
+            "type": "image/png"
+        }
+    ],
+    "gcm_sender_id": "20932222653"
+}
