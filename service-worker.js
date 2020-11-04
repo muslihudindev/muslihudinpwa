@@ -38,41 +38,42 @@ workbox.routing.registerRoute(
   })
 );
 
-self.addEventListener("fetch", function (event) {
-  var base_url = "https://api.football-data.org/v2/";
+workbox.routing.registerRoute(
+  new RegExp('/css/'),
+  workbox.strategies.cacheOnly()
+);
 
-  if (event.request.url.indexOf(base_url) > -1) {
-    event.respondWith(
-      caches.open(CACHE_NAME).then(function (cache) {
-        return fetch(event.request).then(function (response) {
-          cache.put(event.request.url, response.clone());
-          return response;
-        })
-      })
-    );
-  } else {
-    event.respondWith(
-      caches.match(event.request, { ignoreSearch: true }).then(function (response) {
-        return response || fetch(event.request);
-      })
-    )
-  }
-});
+workbox.routing.registerRoute(
+  new RegExp('/js/'),
+  workbox.strategies.cacheOnly()
+);
 
-self.addEventListener("activate", function (event) {
-  event.waitUntil(
-    caches.keys().then(function (cacheNames) {
-      return Promise.all(
-        cacheNames.map(function (cacheName) {
-          if (cacheName != CACHE_NAME) {
-            console.log("ServiceWorker: cache " + cacheName + " dihapus");
-            return caches.delete(cacheName);
-          }
-        })
-      );
-    })
-  );
-});
+workbox.routing.registerRoute(
+  new RegExp('/img/'),
+  workbox.strategies.cacheOnly()
+);
+
+workbox.routing.registerRoute(
+  /\.(?:png|gif|jpg|jpeg|svg)$/,
+  workbox.strategies.cacheFirst({
+    cacheName: 'images',
+    plugins: [
+      new workbox.expiration.Plugin({
+        maxEntries: 60,
+        maxAgeSeconds: 30 * 24 * 60 * 60, // 30 hari
+      }),
+    ],
+  }),
+);
+
+workbox.routing.registerRoute(
+  "https://api.football-data.org/v2/",
+  workbox.strategies.networkFirst({
+    cacheName: 'apiteams'
+  })
+);
+
+
 
 self.addEventListener('push', function (event) {
     var body;
