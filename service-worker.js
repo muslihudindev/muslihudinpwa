@@ -59,28 +59,6 @@ workbox.routing.registerRoute(
   'GET'
 );
 
-self.addEventListener("fetch", function (event) {
-  var base_url = "https://api.football-data.org/v2/";
-
-  if (event.request.url.indexOf(base_url) > -1) {
-    event.respondWith(
-      caches.open(CACHE_NAME).then(function (cache) {
-        return fetch(event.request).then(function (response) {
-          cache.put(event.request.url, response.clone());
-          return response;
-        })
-      })
-    );
-  } else {
-    event.respondWith(
-      caches.match(event.request, { ignoreSearch: true }).then(function (response) {
-        return response || fetch(event.request);
-      })
-    )
-  }
-});
-
-
 
 self.addEventListener('push', function (event) {
     var body;
