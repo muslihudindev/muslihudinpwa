@@ -2,8 +2,8 @@
 function registersw() { 
     if ("serviceWorker" in navigator) {
         window.addEventListener("load", function() {
-            navigator.serviceWorker
-            .register("/service-worker.js")
+            const prefix = location.pathname.replace(/\/(index\.html)?$/, '');
+            navigator.serviceWorker.register(`${prefix}/service-worker.js`)
             .then(function() {
                 console.log("Pendaftaran ServiceWorker berhasil");
             })
